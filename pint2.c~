@@ -1,0 +1,59 @@
+#include "monty.h"
+
+/* Opcode instruction table */
+instruction_t opcodes[] = {
+        {"push", monty_push},
+        {"pop", monty_pop},
+        {"pall", monty_pall},
+        {"pint", pint}, /* Add the pint opcode here */
+        {NULL, NULL}
+};
+
+/**
+ * pint - Prints the value at the top of the stack.
+ * @stack: Double pointer to the stack (top of the stack).
+ * @line_number: Line number where the opcode is encountered.
+ */
+void pint(stack_t **stack, unsigned int line_number)
+{
+        if (*stack == NULL)
+        {
+                fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+                exit(EXIT_FAILURE);
+        }
+
+        printf("%d\n", (*stack)->n);
+}
+
+/* Other opcode function implementations */
+
+void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
+{
+        int i = 0;
+
+        while (opcodes[i].opcode != NULL)
+        {
+                if (strcmp(opcode, opcodes[i].opcode) == 0)
+                {
+                        opcodes[i].f(stack, line_number);
+                        return;
+                }
+                i++;
+        }
+
+        fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+        exit(EXIT_FAILURE);
+}
+
+int main(void)
+{
+    /* Main program logic */
+
+    /* Example usage of execute_opcode */
+    char *opcode = "pint";
+    stack_t *stack = NULL;
+    unsigned int line_number = 2;
+    execute_opcode(opcode, &stack, line_number);
+
+    return 0;
+}

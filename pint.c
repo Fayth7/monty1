@@ -1,19 +1,27 @@
 #include "monty.h"
 
 /**
+ * Opcode instruction table 
+*/
+instruction_t opcodes[] = {
+        {"push", monty_push},
+        {"pop", monty_pop},
+        {"pall", monty_pall},
+        {"pint", pint}, /* Add the pint opcode here */
+        {NULL, NULL}
+};
+/**
  * pint - Prints the value at the top of the stack.
- * @stack: Pointer to the stack.
- *
- * Description: prints the value at the top of the stack, followed by a new line.
- * If empty, it prints an error message and exits with EXIT_FAILURE.
+ * @stack: Double pointer to the stack (top of the stack).
+ * @line_number: Line number where the opcode is encountered.
  */
-void pint(stack_t **stack)
+void pint(stack_t **stack, unsigned int line_number)
 {
 if (*stack == NULL)
 {
-fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-free_stack(*stack);
+fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
 exit(EXIT_FAILURE);
 }
+
 printf("%d\n", (*stack)->n);
 }
