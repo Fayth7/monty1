@@ -25,7 +25,8 @@ extern char **op_toks;
 typedef struct stack_s
 {
         int n;
-        int data;
+  int data;
+  int top;
         struct stack_s *prev;
         struct stack_s *next;
 } stack_t;
@@ -62,4 +63,5 @@ void _pstr(stack_t **stack, unsigned int line_number);
 void _rotl(stack_t **stack, unsigned int line_number);
 void _rotr(stack_t **stack, unsigned int line_number);
 void _stack(stack_t **stack, unsigned int line_number);
+
 #endif /* _MONTY_H_ */

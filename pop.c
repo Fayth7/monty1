@@ -12,5 +12,5 @@ if ((*stack)->top == -1)
 printf("Error: stack is empty\n");
 exit(EXIT_FAILURE);
 }
-(*stack)->top--;
+(*stack)->top--);
 }
