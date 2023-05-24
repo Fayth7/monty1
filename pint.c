@@ -1,16 +1,6 @@
 #include "monty.h"
 
 /**
- * Opcode instruction table 
-*/
-instruction_t opcodes[] = {
-        {"push", monty_push},
-        {"pop", monty_pop},
-        {"pall", monty_pall},
-        {"pint", pint}, /* Add the pint opcode here */
-        {NULL, NULL}
-};
-/**
  * pint - Prints the value at the top of the stack.
  * @stack: Double pointer to the stack (top of the stack).
  * @line_number: Line number where the opcode is encountered.

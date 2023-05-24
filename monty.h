@@ -49,18 +49,10 @@ typedef struct monty_stack_s {
 } monty_stack_t;
 
 /* PRIMARY INTERPRETER FUNCTIONS */
-void monty_push(stack_t *stack, int value);
-int monty_pop(stack_t *stack);
-void monty_pall(stack_t *stack);
+void push(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
-/* Opcode instruction table */
-extern instruction_t opcodes[];
-instruction_t opcodes[] = {
-        {"push", monty_push},
-        {"pop", monty_pop},
-        {"pall", monty_pall},
-        {"pint", pint}, /* Add the pint opcode here */
-        {NULL, NULL}
-};
+void swap(stack_t **stack, unsigned int line_number);
+
 #endif /* _MONTY_H_ */
