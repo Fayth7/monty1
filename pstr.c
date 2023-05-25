@@ -1,6 +1,8 @@
 #include "monty.h"
 #include <ctype.h>
 
+int isascii(int c);
+
 /**
  * _pstr - Prints the string starting at the top of the stack.
  * @stack: Double pointer to the stack.
@@ -14,7 +16,7 @@ stack_t *current = *stack;
 
 (void)line_number;
 
-while (current != NULL && current->n != 0 && _isascii(current->n))
+while (current != NULL && current->n != 0 && isascii(current->n))
 {
 printf("%c", current->n);
 current = current->next;

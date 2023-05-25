@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     char *opcode;
     char *argument;
     FILE *file;
-    int value = atoi(argument);
-     
+    int value = 0;
+    
     if (argc != 2)
     {
         printf("USAGE: monty file\n");
@@ -94,57 +94,77 @@ int main(int argc, char *argv[])
 }
 void push(stack_t **stack, int value)
 {
-    if ((*stack)->top == STACK_SIZE - 1)
-    {
-        printf("Error: stack overflow\n");
-        exit(EXIT_FAILURE);
-    }
+stack_t *new_node;
+if (*stack == NULL)
+{
+*stack = malloc(sizeof(stack_t));
+if (*stack == NULL)
+{
+printf("Error: malloc failed\n");
+exit(EXIT_FAILURE);
+}
+(*stack)->n = value;
+(*stack)->next = NULL;
+return;
+}
+new_node = malloc(sizeof(stack_t));
+if (new_node == NULL)
+{
+printf("Error: malloc failed\n");
+exit(EXIT_FAILURE);
+}
 
-    (*stack)->data++(*stack)->top = value;
+new_node->n = value;
+new_node->next = *stack;
+*stack = new_node;
 }
 
 void pop(stack_t **stack, unsigned int line_number)
 {
-    if ((*stack)->top == -1)
-    {
-        printf("L%d: can't pop, stack empty\n", line_number);
-        exit(EXIT_FAILURE);
-    }
-     (*stack)->top--;
+stack_t *temp;
+if (*stack == NULL)
+{
+printf("L%d: can't pop, stack empty\n", line_number);
+exit(EXIT_FAILURE);
 }
 
+temp = *stack;
+*stack = (*stack)->next;
+free(temp);
+}
 void pall(stack_t **stack, unsigned int line_number)
 {
-    int i;
+stack_t *current;
+current = *stack;
 
-    for (i = (*stack)->top; i >= 0; i--)
-    {
-        printf("%d\n", (*stack)->data[i]);
-    }
+(void)line_number;
+
+while (current != NULL)
+{
+printf("%d\n", current->n);
+current = current->next;
+}
 }
 
 void pint(stack_t **stack, unsigned int line_number)
 {
-    if ((*stack)->top == -1)
-    {
-        printf("L%d: can't pint, stack empty\n", line_number);
-	  exit(EXIT_FAILURE);
-    }
-
-    printf("%d\n", (*stack)->data[(*stack)->top]);
+if (*stack == NULL)
+{
+printf("L%d: can't pint, stack empty\n", line_number);
+exit(EXIT_FAILURE);
 }
 
+printf("%d\n", (*stack)->n);
+}
 void swap(stack_t **stack, unsigned int line_number)
 {
-    int temp;
-
-    if ((*stack)->top < 1)
-    {
-        printf("L%d: can't swap, stack too short\n", line_number);
-        exit(EXIT_FAILURE);
-    }
-
-    temp = (*stack)->data[(*stack)->top];
-    (*stack)->data[(*stack)->top] = (*stack)->data[(*stack)->top - 1];
-     (*stack)->data[(*stack)->top - 1] = temp;
+int temp;
+if (*stack == NULL || (*stack)->next == NULL)
+{
+printf("L%d: can't swap, stack too short\n", line_number);
+exit(EXIT_FAILURE);
+}
+temp = (*stack)->n;
+(*stack)->n = (*stack)->next->n;
+(*stack)->next->n = temp;
 }
